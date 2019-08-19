@@ -24,14 +24,15 @@ module.exports = {
   */
   css: [
     'iview/dist/styles/iview.css',
-    '@/assets/css/main.scss'
+    '@/assets/css/main.scss',
   ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/iview',
-    '~/plugins/utils'
+    { src: '@/plugins/vue-mavon-editor', srr: false },
+    { src: '@/plugins/iview', srr: true },
+    { src: '@/plugins/utils', srr: true },
   ],
   /*
   ** Nuxt.js dev-modules
