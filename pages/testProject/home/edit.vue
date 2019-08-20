@@ -46,7 +46,7 @@ export default {
   },
   methods:{
     changeData(val,render){
-      console.log('render',escape(render));
+      // console.log('render',escape(render));
 
     }
   }

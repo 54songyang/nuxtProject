@@ -45,59 +45,61 @@ export default {
               path: "/testProject/home/edit"
             }
           ]
-        },
-        "2": {
-          content: "用户管理",
-          type: "ios-people",
-          menu: [
-            {
-              id: "2-1",
-              co: "新增用户"
-            },
-            {
-              id: "2-2",
-              co: "活跃用户"
-            }
-          ]
-        },
-        "3": {
-          content: "统计分析",
-          type: "ios-stats",
-          menu1: [
-            {
-              menuTitle: "使用",
-              menuList: [
-                {
-                  id: "3-1",
-                  co: "新增和启动"
-                },
-                {
-                  id: "3-2",
-                  co: "活跃分析"
-                },
-                {
-                  id: "3-3",
-                  co: "时段分析"
-                }
-              ]
-            },
-            {
-              menuTitle: "留存",
-              menuList: [
-                {
-                  id: "3-4",
-                  co: "用户留存"
-                },
-                {
-                  id: "3-5",
-                  co: "流失用户"
-                }
-              ]
-            }
-          ]
         }
+        // "2": {
+        //   content: "用户管理",
+        //   type: "ios-people",
+        //   menu: [
+        //     {
+        //       id: "2-1",
+        //       co: "新增用户"
+        //     },
+        //     {
+        //       id: "2-2",
+        //       co: "活跃用户"
+        //     }
+        //   ]
+        // },
+        // "3": {
+        //   content: "统计分析",
+        //   type: "ios-stats",
+        //   menu1: [
+        //     {
+        //       menuTitle: "使用",
+        //       menuList: [
+        //         {
+        //           id: "3-1",
+        //           co: "新增和启动"
+        //         },
+        //         {
+        //           id: "3-2",
+        //           co: "活跃分析"
+        //         },
+        //         {
+        //           id: "3-3",
+        //           co: "时段分析"
+        //         }
+        //       ]
+        //     },
+        //     {
+        //       menuTitle: "留存",
+        //       menuList: [
+        //         {
+        //           id: "3-4",
+        //           co: "用户留存"
+        //         },
+        //         {
+        //           id: "3-5",
+        //           co: "流失用户"
+        //         }
+        //       ]
+        //     }
+        //   ]
+        // }
       }
     };
+  },
+  beforeCreate() {
   },
   methods: {
     toPath(val) {

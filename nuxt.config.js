@@ -43,6 +43,17 @@ module.exports = {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/proxy'
+  ],
+  proxy: [
+    [
+      '/api',
+      {
+        target: 'https://www.easy-mock.com/mock/5c1c59326fedb679d1b94a74/hwp-h5',  //你的接口地址
+        pathRewrite: { '^/api': '/' }
+      }
+    ]
   ],
   /*
   ** Build configuration
@@ -51,7 +62,7 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-    extend (config, ctx) {
+    extend(config, ctx) {
     }
   }
 }
