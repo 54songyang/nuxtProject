@@ -1,29 +1,21 @@
 <template>
   <div class="left-page">
-    <Menu mode="horizontal" @on-select="menuEv" theme="light" accordion>
+    <Menu mode="horizontal" theme="light" accordion>
       <Row>
-        <Col span="16">
-          <Submenu v-for="(item1,index1) in option" :key="index1" :name="index1">
-            <template slot="title">
-              <Icon :type="item1.type" />
-              {{item1.content}}
-            </template>
-            <MenuItem
-              v-for="(item2,index2) in item1.menu"
-              :key="index2"
-              :name="item2.id"
-            >{{item2.co}}</MenuItem>
-            <MenuGroup v-for="(item2,index2) in item1.menu1" :key="index2" :title="item2.menuTitle">
-              <MenuItem
-                v-for="(item3,index3) in item2.menuList"
-                :key="index3"
-                :name="item3.id"
-              >{{item3.co}}</MenuItem>
-            </MenuGroup>
-          </Submenu>
+        <Col span="10">
+          <Dropdown trigger="click" @on-click="changePage" style="margin-left: 20px">
+            <a href="javascript:void(0)">{{title}}</a>
+            <DropdownMenu slot="list" v-if="pageContent">
+              <DropdownItem
+                v-for="(item,index) in pageContent"
+                :key="index"
+                :name="index"
+              >{{item.title}}</DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
         </Col>
-        <Col span="8" class="user-list">
-          <Dropdown trigger="click" @on-click="changeBtn" class="name-part">
+        <Col span="14" class="user-list">
+          <Dropdown trigger="click" @on-click="changeBtn">
             <a href="javascript:void(0)">
               <div class="user-btn-box">
                 <img class="photo-btn" src="~assets/images/photo.jpeg" />
@@ -45,6 +37,9 @@
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>
+          <Button class="edit-btn" size="small" type="primary" shape="circle" @click="toEdit">
+            <Icon type="ios-paw-outline" />写文章
+          </Button>
         </Col>
       </Row>
     </Menu>
@@ -52,22 +47,43 @@
 </template>
 <script>
 export default {
-  props: ["option"],
   data() {
-    return {};
+    return {
+      title: "阿里云学习",
+      pageContent: []
+    };
   },
   mounted() {
-    // console.log("option", this.option);
+    this.getInfo();
   },
   methods: {
-    menuEv(val) {
-      let arr = val.split("-");
-      this.$emit("toPath", this.option[arr[0]].menu[Number(arr[1]) - 1].path);
+    getInfo() {
+      this.$axios({
+        method: "post",
+        url:
+          "https://www.easy-mock.com/mock/5c1c59326fedb679d1b94a74/hwp-h5/aliyun-nuxt-detail",
+        data: "123"
+      })
+        .then(response => {
+          this.pageContent = response.data.respBizMsg.pageContent;
+        })
+        .catch(error => {});
     },
     changeBtn(name) {
       if (name == "signOut") {
-        this.$router.replace('/testProject/logIn')
+        this.$router.replace("/testProject/logIn");
       }
+    },
+    changePage(name) {
+      this.title = this.pageContent[name].title
+      this.$emit("changePageSet", {
+        arr: this.pageContent,
+        index: name
+      });
+    },
+    toEdit(){
+      this.title = 'markDown 编辑器'
+      this.$router.push('/testProject/home/edit')
     }
   }
 };
@@ -98,7 +114,6 @@ export default {
     .user-level {
       margin-top: 4px;
       font-size: 12px;
-      // text-align: center;
     }
   }
   .sign-out {
@@ -122,12 +137,13 @@ export default {
       margin-right: 10px;
     }
   }
-  .user-list{
+  .user-list {
     display: flex;
     justify-content: flex-end;
-    .name-part{
-      margin-right: 18px;
-    }
+    align-items: center;
+  }
+  .edit-btn {
+    margin: 0 20px;
   }
 }
 </style>

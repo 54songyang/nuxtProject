@@ -27,7 +27,7 @@
 
 <script>
 import pcBg from '@/assets/images/bg.jpeg'
-import phoneBg from '@/assets/images/phoneBg.jpeg'
+import phoneBg from '@/assets/images/phoneBg.jpg'
 export default {
   data() {
     return {
