@@ -1,20 +1,20 @@
 <template>
-  <div class="left-page">
+  <div class="left-page" :style="{opacity:leftPageOp}">
     <Menu mode="horizontal" theme="light" accordion>
       <Row>
-        <Col span="10">
+        <Col :span="colNum">
           <Dropdown trigger="click" @on-click="changePage" style="margin-left: 20px">
-            <a href="javascript:void(0)">{{title}}</a>
-            <DropdownMenu slot="list" v-if="pageContent">
-              <DropdownItem
-                v-for="(item,index) in pageContent"
-                :key="index"
-                :name="index"
-              >{{item.title}}</DropdownItem>
+            <a href="javascript:void(0)" class="title-box">{{title}}</a>
+            <DropdownMenu slot="list" v-if="titleList">
+              <DropdownItem v-for="(item,index) in titleList" :key="index" :name="index">{{item}}</DropdownItem>
             </DropdownMenu>
           </Dropdown>
         </Col>
-        <Col span="14" class="user-list">
+        <div :class="['pull-btn',!showUser?'ani':'']" v-if="!this.IsPC" @click="showMenu">
+          <Icon size="14" color="#bbbdda" v-show="showUser" type="ios-arrow-forward" />
+          <Icon size="28" color="#bbbdda" v-show="!showUser" type="ios-arrow-back" />
+        </div>
+        <Col span="14" class="user-list" v-if="showUser">
           <Dropdown trigger="click" @on-click="changeBtn">
             <a href="javascript:void(0)">
               <div class="user-btn-box">
@@ -47,43 +47,68 @@
 </template>
 <script>
 export default {
+  props: ["titleList"],
   data() {
     return {
-      title: "阿里云学习",
-      pageContent: []
+      index: "",
+      cliShow: false,
+      IsPC: false,
+      leftPageOp:1,
     };
   },
+  computed: {
+    title() {
+      if (this.index !== "") {
+        return this.titleList[this.index];
+      } else {
+        return "文章列表";
+      }
+    },
+    showUser() {
+      return this.cliShow || this.IsPC;
+    },
+    colNum() {
+      if (this.showUser) {
+        return "10";
+      } else {
+        return "24";
+      }
+    }
+  },
   mounted() {
-    this.getInfo();
+    this.IsPC = this.$utils.IsPC();
+    window.addEventListener("scroll", this.handleScroll);
+  },
+  destroyed() {
+    window.removeEventListener("scroll", this.handleScroll); //清除屏幕滚动监听
   },
   methods: {
-    getInfo() {
-      this.$axios({
-        method: "post",
-        url:
-          "https://www.easy-mock.com/mock/5c1c59326fedb679d1b94a74/hwp-h5/aliyun-nuxt-detail",
-        data: "123"
-      })
-        .then(response => {
-          this.pageContent = response.data.respBizMsg.pageContent;
-        })
-        .catch(error => {});
-    },
     changeBtn(name) {
       if (name == "signOut") {
         this.$router.replace("/testProject/logIn");
       }
     },
     changePage(name) {
-      this.title = this.pageContent[name].title
-      this.$emit("changePageSet", {
-        arr: this.pageContent,
-        index: name
-      });
+      this.index = name;
+      this.$emit("changePageSet", this.index);
     },
-    toEdit(){
-      this.title = 'markDown 编辑器'
-      this.$router.push('/testProject/home/edit')
+    toEdit() {
+      this.title = "markDown 编辑器";
+      this.$router.push("/testProject/home/edit");
+    },
+    showMenu() {
+      this.cliShow = !this.cliShow;
+    },
+    handleScroll() {
+      let scrollTop =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop;
+      if(scrollTop!=0){
+        this.leftPageOp = 1 - (scrollTop / 60) 
+      }else{
+        this.leftPageOp = 1;
+      }
     }
   }
 };
@@ -96,6 +121,18 @@ export default {
   left: 0;
   top: 0;
   z-index: 999;
+  .ivu-col {
+    height: 60px;
+  }
+  .title-box {
+    text-overflow: -o-ellipsis-lastline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+  }
   .user-info {
     strong {
       font-size: 18px;
@@ -127,12 +164,12 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    font-size: 14px;
     color: #666;
     .photo-btn {
       display: block;
-      width: 40px;
-      height: 40px;
+      width: 35px;
+      height: 35px;
       border-radius: 50%;
       margin-right: 10px;
     }
@@ -144,6 +181,33 @@ export default {
   }
   .edit-btn {
     margin: 0 20px;
+  }
+  .pull-btn {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    right: 0px;
+    width: 20px;
+    height: 40px;
+    background: none;
+    z-index: 1000;
+    transform: translateY(-50%);
+  }
+  .ani {
+    animation: test linear infinite 0.8s;
+  }
+  @keyframes test {
+    0% {
+      top: 40%;
+    }
+    50% {
+      top: 50%;
+    }
+    100% {
+      top: 40%;
+    }
   }
 }
 </style>

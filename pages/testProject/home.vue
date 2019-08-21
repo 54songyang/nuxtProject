@@ -1,6 +1,6 @@
 <template>
   <div class="home-page">
-    <leftTab @changePageSet="changePage($event)"></leftTab>
+    <leftTab @changePageSet="changePage($event)" :titleList="titleList"></leftTab>
     <div class="main-body">
       <nuxt-child :pageContent="pageContent" keep-alive></nuxt-child>
     </div>
@@ -14,18 +14,42 @@ export default {
   },
   data() {
     return {
-      pageContent:{},
+      info:'',
+      pageIndex:0,
+      titleList:'',
     };
+  },
+  computed:{
+    pageContent(){
+      return this.info[this.pageIndex]
+    },
+  },
+  mounted(){
+    this.getInfo()
   },
   methods: {
     toPath(val) {
       this.$router.push(val);
     },
     changePage(val) {
-      console.log("val", val);
-      this.pageContent = val;
-      this.$router.push('/testProject/home/detailPage')
-    }
+      this.$router.push('/testProject/home/detailPage');
+      this.pageIndex = val;
+    },
+    getInfo() {
+      this.$axios({
+        method: "post",
+        url:
+          "https://www.easy-mock.com/mock/5c1c59326fedb679d1b94a74/hwp-h5/aliyun-nuxt-detail",
+        data: "123"
+      })
+        .then(response => {
+          this.info = response.data.respBizMsg.pageContent;
+          this.titleList = this.info.map(el=>{
+            return el.title
+          })
+        })
+        .catch(error => {});
+    },
   }
 };
 </script>

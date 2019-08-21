@@ -31,8 +31,8 @@ module.exports = {
   */
   plugins: [
     { src: '@/plugins/vue-mavon-editor', srr: false },
-    { src: '@/plugins/iview', srr: true },
-    { src: '@/plugins/utils', srr: true },
+    { src: '@/plugins/iview', srr: false },
+    { src: '@/plugins/utils.js', srr: false },
   ],
   /*
   ** Nuxt.js dev-modules

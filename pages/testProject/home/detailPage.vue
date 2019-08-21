@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <h1 class="page-title">{{pageContent.arr[pageContent.index].title}}</h1>
+    <!-- <h1 class="page-title">{{pageContent.title}}</h1> -->
     <no-ssr>
       <mavon-editor
         v-html="pageData"
@@ -23,7 +23,7 @@ export default {
   },
   computed:{
     pageData(){
-      return unescape(this.pageContent.arr[this.pageContent.index].content)
+      return unescape(this.pageContent.content)
     }
   }
 };

@@ -85,7 +85,6 @@ export default {
     }
   },
   beforeMount() {
-    console.log(this.$utils.IsPC());
     this.$utils.IsPC()?this.loginBg = pcBg:this.loginBg=phoneBg;
     if (
       this.$utils.getCookie("user") &&
