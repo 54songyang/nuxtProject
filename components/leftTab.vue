@@ -180,7 +180,7 @@ export default {
     align-items: center;
   }
   .edit-btn {
-    margin: 0 20px;
+    margin: 0 40px 0 20px;
   }
   .pull-btn {
     position: absolute;
@@ -189,14 +189,14 @@ export default {
     justify-content: center;
     top: 50%;
     right: 0px;
-    width: 20px;
+    width: 40px;
     height: 40px;
     background: none;
     z-index: 1000;
     transform: translateY(-50%);
   }
   .ani {
-    animation: test linear infinite 0.8s;
+    animation: test linear infinite 0.5s;
   }
   @keyframes test {
     0% {

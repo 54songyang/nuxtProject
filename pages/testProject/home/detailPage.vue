@@ -23,7 +23,9 @@ export default {
   },
   computed:{
     pageData(){
-      return unescape(this.pageContent.content)
+      if(this.pageContent){
+        return unescape(this.pageContent.content)
+      }
     }
   }
 };
