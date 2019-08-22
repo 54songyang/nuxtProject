@@ -28,7 +28,7 @@ const actions = {
         .then(response => {
           _this.$Message.success("登陆成功");
           _this.$Loading.finish();
-          this.$router.push('/testProject/home/edit')
+          this.$router.push('/testProject/home')
         })
         .catch(response => {
           console.log("error", response);

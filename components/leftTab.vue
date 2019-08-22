@@ -93,7 +93,6 @@ export default {
       this.$emit("changePageSet", this.index);
     },
     toEdit() {
-      this.title = "markDown 编辑器";
       this.$router.push("/testProject/home/edit");
     },
     showMenu() {

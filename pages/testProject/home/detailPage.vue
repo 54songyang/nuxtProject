@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <!-- <h1 class="page-title">{{pageContent.title}}</h1> -->
+    <h1 class="page-title">{{pageContent?pageContent.title:''}}</h1>
     <no-ssr>
       <mavon-editor
         v-html="pageData"
